@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Progress Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fff5f5 0%, #f0fff4 50%, #f5f3ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .title-font {
+            font-family: 'Bubblegum Sans', cursive;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.05));
+        }
+
+        /* Whimsical Floating Blobs */
+        .blob {
+            position: absolute;
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.5;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 100px) scale(1.2); }
+        }
+
+        /* Bouncy Pastel Buttons */
+        .pastel-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 0px rgba(0,0,0,0.05);
+            border: 4px solid white;
+        }
+
+        .pastel-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.08);
+        }
+
+        .pastel-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px rgba(0,0,0,0.05);
+        }
+
+        /* Cloud Animation */
+        .cloud {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: -1;
+            animation: drift var(--d) linear infinite;
+        }
+
+        @keyframes drift {
+            from { left: -20%; }
+            to { left: 120%; }
+        }
+
+        /* Pixie Dust Particles */
+        .pixie-particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 100;
+            animation: fadeOut 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0) translateY(10px); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <!-- Background Decoration -->
+    <div class="blob w-64 h-64 bg-pink-200 rounded-full top-10 left-10"></div>
+    <div class="blob w-96 h-96 bg-blue-100 rounded-full bottom-10 right-10" style="animation-delay: -5s;"></div>
+    <div class="blob w-48 h-48 bg-yellow-100 rounded-full top-1/2 left-1/3" style="animation-delay: -2s;"></div>
+
+    <!-- Animated Clouds -->
+    <div class="cloud text-4xl" style="top: 10%; --d: 35s;">☁️</div>
+    <div class="cloud text-5xl" style="top: 40%; --d: 45s;">☁️</div>
+    <div class="cloud text-3xl" style="top: 75%; --d: 30s;">☁️</div>
+
+    <div class="w-full max-w-sm text-center">
+        <header class="mb-12">
+            <h1 class="title-font text-5xl md:text-6xl mb-4 tracking-wide">
+                Anime Progress Tracker
+            </h1>
+        </header>
+
+        <div class="flex flex-col gap-6">
+            <!-- One Piece -->
+            <a href="https://belleame31.github.io/grand-line-log/" target="_blank" 
+               class="pastel-btn bg-orange-100 text-orange-500 py-6 rounded-[2.5rem] text-2xl font-extrabold hover:bg-orange-200 block">
+                One Piece
+            </a>
+
+            <!-- Fairy Tail -->
+            <a href="https://belleame31.github.io/guild-tracker/" target="_blank" 
+               class="pastel-btn bg-pink-100 text-pink-500 py-6 rounded-[2.5rem] text-2xl font-extrabold hover:bg-pink-200 block">
+                Fairy Tail
+            </a>
+        </div>
+
+        <footer class="mt-16">
+            <div class="flex justify-center gap-2 mb-4">
+                <span class="w-3 h-3 rounded-full bg-pink-200"></span>
+                <span class="w-3 h-3 rounded-full bg-blue-200"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-200"></span>
+            </div>
+            <p class="text-slate-400 text-sm italic">Tracking with happy thoughts</p>
+        </footer>
+    </div>
+
+    <script>
+        // Pixie Dust Effect
+        const colors = ['#FFD1DC', '#FFF9C4', '#E1F5FE', '#F0FFF4', '#FFFFFF'];
+        
+        document.addEventListener('mousemove', (e) => {
+            const particle = document.createElement('div');
+            particle.className = 'pixie-particle';
+            
+            // Randomize size and color
+            const size = Math.random() * 6 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Position
+            particle.style.left = e.clientX + 'px';
+            particle.style.top = e.clientY + 'px';
+            
+            // Add a slight glow
+            particle.style.boxShadow = `0 0 5px ${particle.style.backgroundColor}`;
+
+            document.body.appendChild(particle);
+            
+            // Remove from DOM after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        });
+
+        // Keep the subtle container movement
+        const container = document.querySelector('.max-w-sm');
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) / 60;
+            const moveY = (e.clientY - window.innerHeight / 2) / 60;
+            container.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+</body>
+</html>
+
